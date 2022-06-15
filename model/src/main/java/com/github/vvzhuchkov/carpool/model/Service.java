@@ -1,4 +1,12 @@
 package com.github.vvzhuchkov.carpool.model;
 
-public class Service {
+import java.io.Serializable;
+import java.util.Date;
+
+public class Service implements Serializable {
+    private int id;
+    private String problem;
+    private Date expectedTimeToFinish;
+    private boolean isRepaired;
+
 }

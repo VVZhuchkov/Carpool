@@ -1,14 +1,26 @@
 package com.github.vvzhuchkov.carpool.model;
 
-public class AuthUser {
+import java.io.Serializable;
+
+public class AuthUser implements Serializable {
+    private int id;
     private String email;
     private String password;
-    private Role role;
+    private boolean status;
 
-    public AuthUser(String email, String password, Role role) {
+    public AuthUser(int id, String email, String password, boolean status) {
+        this.id = id;
         this.email = email;
         this.password = password;
-        this.role = role;
+        this.status = status;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getEmail() {
@@ -27,28 +39,28 @@ public class AuthUser {
         this.password = password;
     }
 
-    public Role getRole() {
-        return role;
+    public boolean isStatus() {
+        return status;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     @Override
     public String toString() {
-        return "AuthUser {" + "email = " + email + ", password = " + password + ", role = " + role + "}";
+        return this.getClass().getName() + "{" + " email = " + email + ", password = " + password + "}";
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == this) {
+    public boolean equals(Object o) {
+        if (o == this) {
             return true;
         }
-        if (obj == null || obj.getClass() != this.getClass()) {
+        if (o == null || o.getClass() != this.getClass()) {
             return false;
         }
-        AuthUser authUser = (AuthUser) obj;
+        AuthUser authUser = (AuthUser) o;
         return email == authUser.email;
     }
 
