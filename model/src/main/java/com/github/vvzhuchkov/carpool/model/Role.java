@@ -1,18 +1,10 @@
 package com.github.vvzhuchkov.carpool.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Role {
-    private int id;
+public class Role implements Serializable {
     private RoleAuthUser roleAuthUser;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public RoleAuthUser getRole() {
         return roleAuthUser;
@@ -25,7 +17,6 @@ public class Role {
     @Override
     public String toString() {
         return "RoleAuthUser {" +
-                "idAuthUser=" + id +
                 ", role=" + roleAuthUser +
                 '}';
     }
@@ -35,11 +26,11 @@ public class Role {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Role that = (Role) o;
-        return id == that.id && roleAuthUser == that.roleAuthUser;
+        return roleAuthUser == that.roleAuthUser;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, roleAuthUser);
+        return Objects.hash(roleAuthUser);
     }
 }

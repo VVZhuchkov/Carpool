@@ -2,25 +2,16 @@ package com.github.vvzhuchkov.carpool.model;
 
 import java.io.Serializable;
 
-public class AuthUser implements Serializable {
-    private int id;
+public class AuthUser extends Entity implements Serializable {
     private String email;
     private String password;
     private boolean status;
 
     public AuthUser(int id, String email, String password, boolean status) {
-        this.id = id;
+        super(id);
         this.email = email;
         this.password = password;
         this.status = status;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getEmail() {

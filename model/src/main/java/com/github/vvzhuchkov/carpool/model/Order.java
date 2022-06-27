@@ -4,8 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-public class Order implements Serializable {
-    private int id;
+public class Order extends Entity implements Serializable {
     private String from;
     private String to;
     private String cargo;
@@ -15,7 +14,7 @@ public class Order implements Serializable {
     private OrderState orderState;
 
     public Order(int id, String from, String to, String cargo, String weight, Date date, String comment, OrderState orderState) {
-        this.id = id;
+        super(id);
         this.from = from;
         this.to = to;
         this.cargo = cargo;
@@ -23,14 +22,6 @@ public class Order implements Serializable {
         this.date = date;
         this.comment = comment;
         this.orderState = orderState;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getFrom() {
@@ -84,7 +75,6 @@ public class Order implements Serializable {
     @Override
     public String toString() {
         return "Order {" +
-                "id=" + id +
                 ", from='" + from + '\'' +
                 ", to='" + to + '\'' +
                 ", cargo='" + cargo + '\'' +
@@ -99,12 +89,12 @@ public class Order implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return id == order.id && from.equals(order.from) && to.equals(order.to) && cargo.equals(order.cargo) &&
+        return from.equals(order.from) && to.equals(order.to) && cargo.equals(order.cargo) &&
                 weight.equals(order.weight) && date.equals(order.date) && Objects.equals(comment, order.comment);
     }
 
     @Override
     public int hashCode() {
-        return 31 * Objects.hash(id, from, to, cargo, weight, date, comment);
+        return 31 * Objects.hash(from, to, cargo, weight, date, comment);
     }
 }
