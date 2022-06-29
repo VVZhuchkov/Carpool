@@ -1,4 +1,4 @@
-package com.github.vvzhuchkov.carpool.dao.ExampleConnection;
+package com.github.vvzhuchkov.carpool.dao.connection;
 
 public final class DBParameter {
 

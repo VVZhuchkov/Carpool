@@ -1,4 +1,4 @@
-package com.github.vvzhuchkov.carpool.dao.ExampleConnection;
+package com.github.vvzhuchkov.carpool.dao.connection;
 
 import java.util.ResourceBundle;
 
@@ -11,7 +11,7 @@ public class DBResourceManager {
         return instance;
     }
 
-    public String getValue(String key){
+    public String getValue(String key) {
         return bundle.getString(key);
     }
 }

@@ -1,9 +1,10 @@
 package com.github.vvzhuchkov.carpool.dao.interfaces;
 
+import com.github.vvzhuchkov.carpool.dao.exception.DAOException;
 import com.github.vvzhuchkov.carpool.model.Entity;
 
 public interface EntityDao<Type extends Entity> {
-    void create(Type entity);
+    Integer create(Type entity) throws DAOException;
 
     Type read(Integer id);
 

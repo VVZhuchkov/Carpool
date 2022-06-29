@@ -1,13 +1,14 @@
 package com.github.vvzhuchkov.carpool.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class AuthUser extends Entity implements Serializable {
     private String email;
     private String password;
-    private boolean status;
+    private String status;
 
-    public AuthUser(int id, String email, String password, boolean status) {
+    public AuthUser(int id, String email, String password, String status) {
         super(id);
         this.email = email;
         this.password = password;
@@ -30,33 +31,35 @@ public class AuthUser extends Entity implements Serializable {
         this.password = password;
     }
 
-    public boolean isStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
     @Override
     public String toString() {
-        return this.getClass().getName() + "{" + " email = " + email + ", password = " + password + "}";
+        return "AuthUser{" +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", status='" + status + '\'' +
+                '}';
     }
 
     @Override
     public boolean equals(Object o) {
-        if (o == this) {
-            return true;
-        }
-        if (o == null || o.getClass() != this.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
         AuthUser authUser = (AuthUser) o;
-        return email == authUser.email;
+        return email.equals(authUser.email) && password.equals(authUser.password) && status.equals(authUser.status);
     }
 
     @Override
     public int hashCode() {
-        return 31 * email.hashCode();
+        return Objects.hash(super.hashCode(), email, password, status);
     }
 }
+
