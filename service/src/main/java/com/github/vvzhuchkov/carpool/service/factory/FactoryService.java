@@ -1,11 +1,11 @@
-package com.github.vvzhuchkov.carpool.dao.factory;
+package com.github.vvzhuchkov.carpool.service.factory;
 
-import com.github.vvzhuchkov.carpool.dao.implementation.*;
-import com.github.vvzhuchkov.carpool.dao.interf.*;
+import com.github.vvzhuchkov.carpool.service.implementation.DefaultAuthUserService;
+import com.github.vvzhuchkov.carpool.service.interf.AuthUserService;
 
-public class FactoryDao {
-    private static volatile FactoryDao instance;
-    private final AuthUserDao authUserDao;
+public class FactoryService {
+    private static volatile FactoryService instance;
+    private final AuthUserService authUserService;
 /*    private final CarDao carDao;
     private final DriverDao driverDao;
     private final MaintenanceDao maintenanceDao;
@@ -13,30 +13,26 @@ public class FactoryDao {
     private final RoleDao roleDao;
     private final UserDao userDao;*/
 
-    public static FactoryDao getInstance() {
-        FactoryDao localInstance = instance;
+    public static FactoryService getInstance() {
+        FactoryService localInstance = instance;
         if(localInstance == null){
-            synchronized (FactoryDao.class){
+            synchronized (FactoryService.class){
                 localInstance = instance;
                 if (localInstance == null){
-                    instance = localInstance = new FactoryDao();
+                    instance = localInstance = new FactoryService();
                 }
             }
         }
         return localInstance;
     }
 
-    private FactoryDao(){
-        authUserDao = new DefaultAuthUserDao();
+    private FactoryService(){
+        authUserService = new DefaultAuthUserService();
    /*     carDao = new DefaultCarDao();
         driverDao = new DefaultDriverDao();
         maintenanceDao = new DefaultMaintenanceDao();
         orderDao = new DefaultOrderDao();
         roleDao = new DefaultRoleDao();
         userDao = new DefaultUserDao();*/
-    }
-
-    public AuthUserDao getAuthUserDao() {
-        return authUserDao;
     }
 }
