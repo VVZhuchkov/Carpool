@@ -7,6 +7,6 @@ public interface AuthUserService {
 
     AuthUser login (String email, String password) throws ServiceException;
 
-    AuthUser registration (String email, String password, String status);
+    boolean registration (AuthUser authUser) throws ServiceException;
 
 }

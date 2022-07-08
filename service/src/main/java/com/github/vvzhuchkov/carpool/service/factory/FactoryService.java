@@ -35,4 +35,8 @@ public class FactoryService {
         roleDao = new DefaultRoleDao();
         userDao = new DefaultUserDao();*/
     }
+
+    public AuthUserService getAuthUserService(){
+        return authUserService;
+    }
 }

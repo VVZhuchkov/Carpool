@@ -12,7 +12,7 @@ import java.sql.*;
 public class DefaultAuthUserDao implements AuthUserDao {
 
     @Override
-    public Integer create(AuthUser authUser) throws DAOException {
+    public synchronized boolean create(AuthUser authUser) throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet generatedKey = null;
@@ -25,7 +25,7 @@ public class DefaultAuthUserDao implements AuthUserDao {
             preparedStatement.executeUpdate();
             generatedKey = preparedStatement.getGeneratedKeys();
             generatedKey.next();
-            return generatedKey.getInt(1);
+            return true;
         } catch (SQLException e) {
             throw new DAOException(e);
         } catch (ConnectionPoolException e) {

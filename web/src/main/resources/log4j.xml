@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration PUBLIC "-//log4j/log4j Configuration//EN" "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+    <!-- Записать вывод в консоль-->
+    <appender name="console" class="org.apache.log4j.ConsoleAppender">
+        <!-- Формат вывода журнала-->
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%p][%d{yyyy-MM-dd HH:mm:ss SSS}][%c]-[%m]%n"/>
+        </layout>
+
+        <!-- Фильтр устанавливает уровень вывода-->
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <!-- установить минимальный уровень вывода журнала-->
+            <param name="levelMin" value="INFO"/>
+            <!-- установить максимальный уровень вывода журнала-->
+            <param name="levelMax" value="ERROR"/>
+        </filter>
+    </appender>
+
+
+    <!-- Вывести журнал в файл-->
+    <appender name="fileAppender" class="org.apache.log4j.FileAppender">
+        <!-- Полный путь к файлу-->
+        <param name="File" value="/data/applogs/own/fileAppender.log"/>
+        <!-- Добавлять ли в существующий файл: по умолчанию true, если false, удалять и заново создавать файл при каждом
+        его запуске-->
+        <param name="Append" value="false"/>
+        <param name="Threshold" value="INFO"/>
+        <!-- Включить ли кэширование, по умолчанию false-->
+        <param name="BufferedIO" value="false"/>
+        <!-- Размер кэша, зависит от предыдущего параметра (bufferedIO), размер кэша по умолчанию - 8K-->
+        <param name="BufferSize" value="512"/>
+        <!-- Формат вывода журнала-->
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%p][%d{yyyy-MM-dd HH:mm:ss SSS}][%c]-[%m]%n"/>
+        </layout>
+    </appender>
+
+
+    <!-- выводить журналы в файл и автоматически создавать резервные копии, когда размер файла достигает определенного
+    порогового значения-->
+    <!-- Подкласс FileAppender-->
+    <appender name="rollingAppender" class="org.apache.log4j.RollingFileAppender">
+        <!-- Полный путь к файлу журнала-->
+        <param name="File" value="/data/applogs/RollingFileAppender.log"/>
+        <!-- Добавлять ли в существующий файл: по умолчанию true, если false, удалять и заново создавать файл при каждом
+        его запуске-->
+        <param name="Append" value="true"/>
+        <!-- Максимальное количество сохраняемых журналов резервного копирования. Значение по умолчанию: 1-->
+        <param name="MaxBackupIndex" value="10"/>
+        <!-- Установите автоматический откат, когда файл журнала достигнет этого порогового значения. Единица может быть
+        КБ, МБ, ГБ, по умолчанию используется КБ, по умолчанию: 10 МБ-->
+        <param name="MaxFileSize" value="10KB"/>
+        <!-- Установить стиль вывода журнала--> `
+        <layout class="org.apache.log4j.PatternLayout">
+            <!-- Формат вывода журнала-->
+            <param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss:SSS}] [%-5p] [method:%l]%n%m%n%n"/>
+        </layout>
+    </appender>
+
+</log4j:configuration>
