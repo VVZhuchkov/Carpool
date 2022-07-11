@@ -5,15 +5,14 @@ import com.github.vvzhuchkov.carpool.service.exception.ServiceException;
 import com.github.vvzhuchkov.carpool.service.factory.FactoryService;
 import com.github.vvzhuchkov.carpool.service.interf.AuthUserService;
 import com.github.vvzhuchkov.carpool.web.WebUtils;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-@WebServlet("/login")
+@WebServlet(urlPatterns = {"/index.html", "/login"})
 public class LoginServlet extends HttpServlet {
     private static final Logger logger = Logger.getLogger(LoginServlet.class);
     private static final AuthUserService authUserService = FactoryService.getInstance().getAuthUserService();
@@ -43,6 +42,7 @@ public class LoginServlet extends HttpServlet {
         } catch (ServiceException e) {
             logger.error(Level.ERROR, e);
         }
-            request.getSession().setAttribute("AuthUser", authUser);
-        }
+        System.out.println("22222");
+        request.getSession().setAttribute("AuthUser", authUser);
     }
+}

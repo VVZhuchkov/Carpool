@@ -10,7 +10,7 @@ import java.util.concurrent.Executor;
 public final class ConnectionPool {
     private static volatile ConnectionPool instance;
 
-    public static ConnectionPool getInstance() {
+    public static ConnectionPool getInstance() throws ConnectionPoolException {
         ConnectionPool localInstance = instance;
         if(localInstance == null){
             synchronized (ConnectionPool.class){
@@ -32,7 +32,7 @@ public final class ConnectionPool {
     private String password;
     private int poolSize;
 
-    private ConnectionPool() {
+    private ConnectionPool() throws ConnectionPoolException {
         DBResourceManager dbResourseManager = DBResourceManager.getInstance();
         this.driverName = dbResourseManager.getValue(DBParameter.DB_DRIVER);
         this.url = dbResourseManager.getValue(DBParameter.DB_URL);
@@ -43,6 +43,7 @@ public final class ConnectionPool {
         } catch (NumberFormatException e) {
             poolSize = 5;
         }
+        initPoolData();
     }
 
     public void initPoolData() throws ConnectionPoolException {
