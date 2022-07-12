@@ -34,15 +34,15 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
         try {
             authUser = authUserService.login(email, password);
-            if (authUser == null) {
-                request.setAttribute("error", "Invalid email or password");
-                WebUtils.forward("login", request, response);
-                return;
-            }
         } catch (ServiceException e) {
             logger.error(Level.ERROR, e);
         }
-        System.out.println("22222");
+        if (authUser == null) {
+            request.setAttribute("error", "Invalid email or password");
+            WebUtils.forward("login", request, response);
+            return;
+        }
         request.getSession().setAttribute("AuthUser", authUser);
+        WebUtils.redirect("/home", request, response);
     }
 }

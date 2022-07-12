@@ -5,6 +5,7 @@
 <head>
 </head>
 <body>
+<center>
 <h3>Login</h3>
 <form action="${pageContext.request.contextPath}/login" method="post">
     <label for="email">email</label>
@@ -14,5 +15,6 @@
     <input type="submit">
 </form>
 <p style="color: red">${error}</p>
+</center>
 </body>
 </html>
