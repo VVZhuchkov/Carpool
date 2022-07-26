@@ -4,11 +4,12 @@ import com.github.vvzhuchkov.carpool.model.AuthUser;
 import com.github.vvzhuchkov.carpool.service.exception.ServiceException;
 import com.github.vvzhuchkov.carpool.service.factory.FactoryService;
 import com.github.vvzhuchkov.carpool.service.interf.AuthUserService;
-import com.github.vvzhuchkov.carpool.web.WebUtils;
+import com.github.vvzhuchkov.carpool.web.WebUtil;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -19,12 +20,13 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-        Object authUser = request.getSession().getAttribute("authUser");
+        HttpSession session = request.getSession();
+        AuthUser authUser = (AuthUser)session.getAttribute("authUser");
         if (authUser == null) {
-            WebUtils.forward("login", request, response);
+            WebUtil.forward("/login/login", request, response);
             return;
         }
-        WebUtils.redirect("/home", request, response);
+        WebUtil.redirect("/home", request, response);
     }
 
     @Override
@@ -39,10 +41,10 @@ public class LoginServlet extends HttpServlet {
         }
         if (authUser == null) {
             request.setAttribute("error", "Invalid email or password");
-            WebUtils.forward("login", request, response);
+            WebUtil.forward("/login/login", request, response);
             return;
         }
         request.getSession().setAttribute("AuthUser", authUser);
-        WebUtils.redirect("/home", request, response);
+        WebUtil.redirect("/home", request, response);
     }
 }

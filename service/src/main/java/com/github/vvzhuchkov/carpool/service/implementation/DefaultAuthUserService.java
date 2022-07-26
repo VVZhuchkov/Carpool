@@ -11,13 +11,14 @@ public class DefaultAuthUserService implements AuthUserService {
     private static final AuthUserDao authUserDAO = FactoryDao.getInstance().getAuthUserDao();
 
     public AuthUser login(String email, String password) throws ServiceException {
+        AuthUser authUser = null;
         try {
-            AuthUser authUser = authUserDAO.readByEmail(email);
-            if (authUser.getPassword().equals(password)) {
-                return authUser;
-            }
+            authUser = authUserDAO.readByEmail(email);
         } catch (DAOException e) {
             throw new ServiceException("User with this email doesn't exist");
+        }
+        if (authUser.getPassword().equals(password)) {
+            return authUser;
         }
         return null;
     }
@@ -25,7 +26,7 @@ public class DefaultAuthUserService implements AuthUserService {
     public boolean registration(AuthUser authUser) throws ServiceException {
         boolean isCreated;
         try {
-          isCreated = authUserDAO.create(authUser);
+            isCreated = authUserDAO.create(authUser);
         } catch (DAOException e) {
             throw new ServiceException("Database error. Impossible to create user with these credentials");
         }
