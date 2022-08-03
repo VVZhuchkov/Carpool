@@ -1,18 +1,30 @@
 package com.github.vvzhuchkov.carpool.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class AuthUser extends Entity implements Serializable {
     private String email;
     private String password;
     private String status;
+    private Set<Role> roleSet;
 
-    public AuthUser(int id, String email, String password, String status) {
+    public AuthUser(Integer id, String email, String password, String status) {
         super(id);
         this.email = email;
         this.password = password;
         this.status = status;
+        this.roleSet = new HashSet<>();
+    }
+
+    public AuthUser(Integer id, String email, String password, String status, Set<Role> roleSet) {
+        super(id);
+        this.email = email;
+        this.password = password;
+        this.status = status;
+        this.roleSet = roleSet;
     }
 
     public String getEmail() {
@@ -39,12 +51,21 @@ public class AuthUser extends Entity implements Serializable {
         this.status = status;
     }
 
+    public Set<Role> getRoleSet() {
+        return roleSet;
+    }
+
+    public void setRoleSet(Set<Role> roleSet) {
+        this.roleSet = roleSet;
+    }
+
     @Override
     public String toString() {
         return "AuthUser{" +
                 "email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", status='" + status + '\'' +
+                ", roleSet=" + roleSet +
                 '}';
     }
 
@@ -54,12 +75,12 @@ public class AuthUser extends Entity implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         AuthUser authUser = (AuthUser) o;
-        return email.equals(authUser.email) && password.equals(authUser.password) && status.equals(authUser.status);
+        return email.equals(authUser.email) && password.equals(authUser.password) && status.equals(authUser.status) && roleSet.equals(authUser.roleSet);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), email, password, status);
+        return Objects.hash(super.hashCode(), email, password, status, roleSet);
     }
 }
 

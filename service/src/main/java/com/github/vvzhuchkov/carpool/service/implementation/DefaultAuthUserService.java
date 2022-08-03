@@ -23,13 +23,13 @@ public class DefaultAuthUserService implements AuthUserService {
         return null;
     }
 
-    public boolean registration(AuthUser authUser) throws ServiceException {
-        boolean isCreated;
+    public Integer registration(AuthUser authUser) throws ServiceException {
+        Integer newUserId;
         try {
-            isCreated = authUserDAO.create(authUser);
+            newUserId = authUserDAO.create(authUser);
         } catch (DAOException e) {
             throw new ServiceException("Database error. Impossible to create user with these credentials");
         }
-        return isCreated;
+        return newUserId;
     }
 }

@@ -4,11 +4,11 @@ import com.github.vvzhuchkov.carpool.dao.exception.DAOException;
 import com.github.vvzhuchkov.carpool.model.Entity;
 
 public interface EntityDao<Type extends Entity> {
-    boolean create(Type entity) throws DAOException;
+    Integer create(Type entity) throws DAOException;
 
-    Type read(Integer id);
+    Type read(Integer id) throws DAOException;
 
-    void update(Type entity);
+    void update(Type entity) throws DAOException;
 
-    void delete(Integer id);
+    void delete(Integer id) throws DAOException;
 }
