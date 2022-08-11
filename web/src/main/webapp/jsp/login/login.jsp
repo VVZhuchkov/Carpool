@@ -4,6 +4,7 @@
 <html>
 <head>
 <link rel="stylesheet" href="css/login_form.css">
+<link rel="stylesheet" href="css/company_logo.css">
 </head>
 <body>
 <jsp:include page="login_form.jsp"/>

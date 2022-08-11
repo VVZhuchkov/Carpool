@@ -51,11 +51,11 @@ public class AuthUser extends Entity implements Serializable {
         this.status = status;
     }
 
-    public Set<Role> getRoleSet() {
+    public Set<Role> getRoleAuthUsers() {
         return roleSet;
     }
 
-    public void setRoleSet(Set<Role> roleSet) {
+    public void setRoleAuthUsers(Set<Role> roleSet) {
         this.roleSet = roleSet;
     }
 
@@ -65,7 +65,7 @@ public class AuthUser extends Entity implements Serializable {
                 "email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", status='" + status + '\'' +
-                ", roleSet=" + roleSet +
+                ", roleAuthUsers=" + roleSet +
                 '}';
     }
 

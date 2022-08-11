@@ -1,4 +1,4 @@
-<h1>Login</h1>
+<img src="img/company_logo.png" alt="VZ" width="10%" height="12%">
 <form action="${pageContext.request.contextPath}/login" method="post">
   <div class="row">
     <label for="email">Email</label>
