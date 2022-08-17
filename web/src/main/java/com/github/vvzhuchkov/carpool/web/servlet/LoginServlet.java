@@ -21,12 +21,12 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-        AuthUser authUser = (AuthUser)session.getAttribute("authUser");
+        AuthUser authUser = (AuthUser) session.getAttribute("authUser");
         if (authUser == null) {
-            WebUtil.forward("/login/login", request, response);
+            WebUtil.forward("login", request, response);
             return;
         }
-        WebUtil.redirect("/home", request, response);
+        WebUtil.redirect("/main", request, response);
     }
 
     @Override
@@ -41,10 +41,10 @@ public class LoginServlet extends HttpServlet {
         }
         if (authUser == null) {
             request.setAttribute("error", "Invalid email or password");
-            WebUtil.forward("/login/login", request, response);
+            WebUtil.forward("login", request, response);
             return;
         }
-        request.getSession().setAttribute("AuthUser", authUser);
-        WebUtil.redirect("/home", request, response);
+        request.getSession().setAttribute("authUser", authUser);
+        WebUtil.redirect("/main", request, response);
     }
 }

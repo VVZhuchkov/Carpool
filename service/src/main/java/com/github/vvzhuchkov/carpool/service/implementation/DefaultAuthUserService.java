@@ -17,19 +17,9 @@ public class DefaultAuthUserService implements AuthUserService {
         } catch (DAOException e) {
             throw new ServiceException("User with this email doesn't exist");
         }
-        if (authUser.getPassword().equals(password)) {
+        if (authUser != null && authUser.getPassword().equals(password)) {
             return authUser;
         }
         return null;
-    }
-
-    public Integer registration(AuthUser authUser) throws ServiceException {
-        Integer newUserId;
-        try {
-            newUserId = authUserDAO.create(authUser);
-        } catch (DAOException e) {
-            throw new ServiceException("Database error. Impossible to create user with these credentials");
-        }
-        return newUserId;
     }
 }

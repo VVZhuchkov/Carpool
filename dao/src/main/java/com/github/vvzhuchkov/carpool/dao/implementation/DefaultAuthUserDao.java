@@ -6,40 +6,30 @@ import com.github.vvzhuchkov.carpool.dao.exception.DAOException;
 import com.github.vvzhuchkov.carpool.dao.interf.AuthUserDao;
 import com.github.vvzhuchkov.carpool.dao.query.SQLQuery;
 import com.github.vvzhuchkov.carpool.model.AuthUser;
-import com.github.vvzhuchkov.carpool.model.Role;
 
 import java.sql.*;
 
 public class DefaultAuthUserDao implements AuthUserDao {
 
     @Override
-    public synchronized Integer create(AuthUser authUser) throws DAOException {
+    public synchronized Integer authUserCreate(AuthUser authUser) throws DAOException{
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery.CREATE_AUTH_USER, Statement.RETURN_GENERATED_KEYS);
-             PreparedStatement preparedStatementLinking = connection.prepareStatement(SQLQuery.CREATE_AUTH_USER_ROLE_LINK)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery.CREATE_AUTH_USER, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, authUser.getEmail());
             preparedStatement.setString(2, authUser.getPassword());
             preparedStatement.setString(3, authUser.getStatus());
             preparedStatement.execute();
-            if (!authUser.getRoleAuthUsers().isEmpty()) {
-                for (Role role : authUser.getRoleAuthUsers()) {
-                preparedStatementLinking.setInt(1, authUser.getId());
-                preparedStatement.setInt(2, role.getId());
-                preparedStatementLinking.execute();
-                }
-            }
             preparedStatement.executeUpdate();
             ResultSet generatedKey = preparedStatement.getGeneratedKeys();
             generatedKey.next();
             return generatedKey.getInt(1);
         } catch (SQLException e) {
-            throw new DAOException(e);
+            throw new DAOException("Check SQL query", e);
         } catch (ConnectionPoolException e) {
-            throw new DAOException(e);
+            throw new DAOException("Connection hasn't been taken", e);
         }
     }
 
-    @Override
     public AuthUser read(Integer id) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -62,7 +52,7 @@ public class DefaultAuthUserDao implements AuthUserDao {
     @Override
     public AuthUser readByEmail(String email) throws DAOException {
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery.READ_AUTH_USER_BY_EMAIL)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery.READ_AUTH_USER_BY_EMAIL)) {
             preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -77,7 +67,6 @@ public class DefaultAuthUserDao implements AuthUserDao {
         return null;
     }
 
-    @Override
     public void update(AuthUser authUser) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -94,7 +83,6 @@ public class DefaultAuthUserDao implements AuthUserDao {
         }
     }
 
-    @Override
     public void delete(Integer id) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;

@@ -3,10 +3,10 @@
 
 <html>
 <head>
-<link rel="stylesheet" href="css/login_form.css">
-<link rel="stylesheet" href="css/company_logo.css">
+<link rel="stylesheet" href="css/main_menu.css">
+ <script src="js/main_menu.js" type="text/javascript"></script>
 </head>
 <body>
-<jsp:include page="login_form.jsp"/>
+<jsp:include page="../form/main_menu.jsp"/>
 </body>
 </html>

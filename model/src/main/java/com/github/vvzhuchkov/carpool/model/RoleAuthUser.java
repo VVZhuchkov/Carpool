@@ -4,6 +4,5 @@ public enum RoleAuthUser {
     SUPER_ADMINISTRATOR,
     ADMINISTRATOR,
     DISPATCHER,
-    DRIVER,
-    SERVICEMAN
+    DRIVER
 }

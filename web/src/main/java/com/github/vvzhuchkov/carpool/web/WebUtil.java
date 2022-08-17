@@ -10,7 +10,7 @@ public class WebUtil {
 
     public static void forward(String page, HttpServletRequest rq, HttpServletResponse rs) {
         try {
-            rq.getRequestDispatcher("/jsp/" + page + ".jsp").forward(rq, rs);
+            rq.getRequestDispatcher("jsp/" + page + ".jsp").forward(rq, rs);
         } catch (ServletException | IOException e) {
             throw new RuntimeException(e);
         }

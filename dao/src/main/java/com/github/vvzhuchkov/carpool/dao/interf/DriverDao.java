@@ -1,4 +1,4 @@
 package com.github.vvzhuchkov.carpool.dao.interf;
 
-public interface DriverDao extends EntityDao {
+public interface DriverDao {
 }

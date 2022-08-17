@@ -18,6 +18,20 @@ CREATE SCHEMA IF NOT EXISTS `carpool` DEFAULT CHARACTER SET utf8mb3 ;
 USE `carpool` ;
 
 -- -----------------------------------------------------
+-- Table `carpool`.`roles`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `carpool`.`roles` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `role` VARCHAR(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  UNIQUE INDEX `role_UNIQUE` (`role` ASC) VISIBLE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 6
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
 -- Table `carpool`.`auth_users`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `carpool`.`auth_users` (
@@ -25,7 +39,14 @@ CREATE TABLE IF NOT EXISTS `carpool`.`auth_users` (
   `email` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
   `status` VARCHAR(20) NOT NULL,
-  PRIMARY KEY (`id`))
+  `roles_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_auth_users_roles1_idx` (`roles_id` ASC) VISIBLE,
+  CONSTRAINT `fk_auth_users_roles1`
+    FOREIGN KEY (`roles_id`)
+    REFERENCES `carpool`.`roles` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8mb3;
@@ -55,7 +76,38 @@ CREATE TABLE IF NOT EXISTS `carpool`.`positions` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `position` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `carpool`.`users`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `carpool`.`users` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `middle_name` VARCHAR(45) NULL DEFAULT NULL,
+  `surname` VARCHAR(45) NOT NULL,
+  `gender` ENUM('MALE', 'FEMALE', 'UNDEFINED') NOT NULL,
+  `birth_date` DATE NOT NULL,
+  `phone` VARCHAR(45) NOT NULL,
+  `address` VARCHAR(45) NOT NULL,
+  `positions_id` INT NOT NULL,
+  `auth_users_id` INT NOT NULL,
+  PRIMARY KEY (`id`, `auth_users_id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  INDEX `fk_users_positions1_idx` (`positions_id` ASC) VISIBLE,
+  INDEX `fk_users_auth_users1_idx` (`auth_users_id` ASC) VISIBLE,
+  CONSTRAINT `fk_users_positions1`
+    FOREIGN KEY (`positions_id`)
+    REFERENCES `carpool`.`positions` (`id`),
+  CONSTRAINT `fk_users_auth_users1`
+    FOREIGN KEY (`auth_users_id`)
+    REFERENCES `carpool`.`auth_users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
 
 
 -- -----------------------------------------------------
@@ -66,36 +118,15 @@ CREATE TABLE IF NOT EXISTS `carpool`.`drivers` (
   `license` VARCHAR(45) NOT NULL,
   `issue-date` DATETIME NOT NULL,
   `end-date` DATETIME NOT NULL,
-  `positions_id` INT NOT NULL,
-  PRIMARY KEY (`id`, `positions_id`),
+  `users_id` INT NOT NULL,
+  PRIMARY KEY (`id`, `users_id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  INDEX `fk_drivers_positions1_idx` (`positions_id` ASC) VISIBLE,
-  CONSTRAINT `fk_drivers_positions1`
-    FOREIGN KEY (`positions_id`)
-    REFERENCES `carpool`.`positions` (`id`)
+  INDEX `fk_drivers_users1_idx` (`users_id` ASC) VISIBLE,
+  CONSTRAINT `fk_drivers_users1`
+    FOREIGN KEY (`users_id`)
+    REFERENCES `carpool`.`users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
-
-
--- -----------------------------------------------------
--- Table `carpool`.`drivers_has_cars`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `carpool`.`drivers_has_cars` (
-  `drivers_id` INT NOT NULL,
-  `cars_id-cars` INT NOT NULL,
-  `start_operation` DATE NOT NULL,
-  `end_operation` DATE NOT NULL,
-  PRIMARY KEY (`drivers_id`, `cars_id-cars`),
-  INDEX `fk_drivers_has_cars_cars1_idx` (`cars_id-cars` ASC) VISIBLE,
-  INDEX `fk_drivers_has_cars_drivers1_idx` (`drivers_id` ASC) VISIBLE,
-  CONSTRAINT `fk_drivers_has_cars_cars1`
-    FOREIGN KEY (`cars_id-cars`)
-    REFERENCES `carpool`.`cars` (`id-cars`),
-  CONSTRAINT `fk_drivers_has_cars_drivers1`
-    FOREIGN KEY (`drivers_id`)
-    REFERENCES `carpool`.`drivers` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
@@ -125,68 +156,24 @@ DEFAULT CHARACTER SET = utf8mb3;
 
 
 -- -----------------------------------------------------
--- Table `carpool`.`roles`
+-- Table `carpool`.`drivers_has_cars1`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `carpool`.`roles` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `role` VARCHAR(20) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  UNIQUE INDEX `role_UNIQUE` (`role` ASC) VISIBLE)
-ENGINE = InnoDB
-AUTO_INCREMENT = 6
-DEFAULT CHARACTER SET = utf8mb3;
-
-
--- -----------------------------------------------------
--- Table `carpool`.`users`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `carpool`.`users` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
-  `middle_name` VARCHAR(45) NULL DEFAULT NULL,
-  `surname` VARCHAR(45) NOT NULL,
-  `gender` ENUM('MALE', 'FEMALE', 'UNDEFINED') NOT NULL,
-  `birth_date` DATE NOT NULL,
-  `phone` VARCHAR(45) NOT NULL,
-  `address` VARCHAR(45) NOT NULL,
-  `positions_id` INT NOT NULL,
-  `auth_users_id` INT NOT NULL,
-  PRIMARY KEY (`id`, `positions_id`, `auth_users_id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  INDEX `fk_users_positions1_idx` (`positions_id` ASC) VISIBLE,
-  INDEX `fk_users_auth_users1_idx` (`auth_users_id` ASC) VISIBLE,
-  CONSTRAINT `fk_users_positions1`
-    FOREIGN KEY (`positions_id`)
-    REFERENCES `carpool`.`positions` (`id`)
+CREATE TABLE IF NOT EXISTS `carpool`.`drivers_has_cars1` (
+  `drivers_id` INT NOT NULL,
+  `cars_id-cars` INT NOT NULL,
+  `start_operation` DATE NOT NULL,
+  `end_operation` DATE NOT NULL,
+  PRIMARY KEY (`drivers_id`, `cars_id-cars`),
+  INDEX `fk_drivers_has_cars1_cars1_idx` (`cars_id-cars` ASC) VISIBLE,
+  INDEX `fk_drivers_has_cars1_drivers1_idx` (`drivers_id` ASC) VISIBLE,
+  CONSTRAINT `fk_drivers_has_cars1_drivers1`
+    FOREIGN KEY (`drivers_id`)
+    REFERENCES `carpool`.`drivers` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_users_auth_users1`
-    FOREIGN KEY (`auth_users_id`)
-    REFERENCES `carpool`.`auth_users` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
-
-
--- -----------------------------------------------------
--- Table `carpool`.`auth_users_has_roles`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `carpool`.`auth_users_has_roles` (
-  `auth_users_id` INT NOT NULL,
-  `roles_id` INT NOT NULL,
-  PRIMARY KEY (`auth_users_id`, `roles_id`),
-  INDEX `fk_auth_users_has_roles_roles1_idx` (`roles_id` ASC) VISIBLE,
-  INDEX `fk_auth_users_has_roles_auth_users1_idx` (`auth_users_id` ASC) VISIBLE,
-  CONSTRAINT `fk_auth_users_has_roles_auth_users1`
-    FOREIGN KEY (`auth_users_id`)
-    REFERENCES `carpool`.`auth_users` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_auth_users_has_roles_roles1`
-    FOREIGN KEY (`roles_id`)
-    REFERENCES `carpool`.`roles` (`id`)
+  CONSTRAINT `fk_drivers_has_cars1_cars1`
+    FOREIGN KEY (`cars_id-cars`)
+    REFERENCES `carpool`.`cars` (`id-cars`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
