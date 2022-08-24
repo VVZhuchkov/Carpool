@@ -7,6 +7,8 @@ import com.github.vvzhuchkov.carpool.model.AuthUser;
 import com.github.vvzhuchkov.carpool.service.exception.ServiceException;
 import com.github.vvzhuchkov.carpool.service.interf.AuthUserService;
 
+import java.util.List;
+
 public class DefaultAuthUserService implements AuthUserService {
     private static final AuthUserDao authUserDAO = FactoryDao.getInstance().getAuthUserDao();
 
@@ -21,5 +23,10 @@ public class DefaultAuthUserService implements AuthUserService {
             return authUser;
         }
         return null;
+    }
+
+    public List<AuthUser> getAllAuthUsers(){
+        List<AuthUser> authUserList = authUserDAO.getAllAuthUsers();
+        return authUserList;
     }
 }

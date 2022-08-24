@@ -8,11 +8,13 @@ import com.github.vvzhuchkov.carpool.dao.query.SQLQuery;
 import com.github.vvzhuchkov.carpool.model.AuthUser;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DefaultAuthUserDao implements AuthUserDao {
 
     @Override
-    public synchronized Integer authUserCreate(AuthUser authUser) throws DAOException{
+    public synchronized Integer authUserCreate(AuthUser authUser) throws DAOException {
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery.CREATE_AUTH_USER, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, authUser.getEmail());
@@ -30,16 +32,13 @@ public class DefaultAuthUserDao implements AuthUserDao {
         }
     }
 
-    public AuthUser read(Integer id) {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        try {
-            connection = ConnectionPool.getInstance().takeConnection();
-            preparedStatement = connection.prepareStatement(SQLQuery.READ_AUTH_USER_BY_ID);
-            resultSet = preparedStatement.executeQuery();
+    public AuthUser readAuthUserById(Integer id) {
+        try (Connection connection = ConnectionPool.getInstance().takeConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery.READ_AUTH_USER_BY_ID);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
             if (resultSet.next()) {
-                return new AuthUser(resultSet.getInt(SQLQuery.ID), resultSet.getString(SQLQuery.EMAIL), resultSet.getString(SQLQuery.PASSWORD), resultSet.getString(SQLQuery.STATUS));
+                return new AuthUser(resultSet.getInt(SQLQuery.ID), resultSet.getString(SQLQuery.EMAIL),
+                        resultSet.getString(SQLQuery.PASSWORD), resultSet.getString(SQLQuery.STATUS), resultSet.getInt(SQLQuery.ROLES_ID));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -50,6 +49,30 @@ public class DefaultAuthUserDao implements AuthUserDao {
     }
 
     @Override
+    public List<AuthUser> getAllAuthUsers() {
+        List<AuthUser> authUserArrayList = null;
+        try (Connection connection = ConnectionPool.getInstance().takeConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery.READ_ALL_AUTH_USERS);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+            authUserArrayList = new ArrayList<>();
+            while (resultSet.next()) {
+                final AuthUser authUser = new AuthUser(
+                        resultSet.getInt("id"),
+                        resultSet.getString("email"),
+                        resultSet.getString("password"),
+                        resultSet.getString("status"),
+                        resultSet.getInt("roles_id"));
+                authUserArrayList.add(authUser);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ConnectionPoolException e) {
+            e.printStackTrace();
+        }
+        return authUserArrayList;
+    }
+
+    @Override
     public AuthUser readByEmail(String email) throws DAOException {
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery.READ_AUTH_USER_BY_EMAIL)) {
@@ -57,7 +80,7 @@ public class DefaultAuthUserDao implements AuthUserDao {
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 return new AuthUser(resultSet.getInt(SQLQuery.ID), resultSet.getString(SQLQuery.EMAIL),
-                        resultSet.getString(SQLQuery.PASSWORD), resultSet.getString(SQLQuery.STATUS));
+                        resultSet.getString(SQLQuery.PASSWORD), resultSet.getString(SQLQuery.STATUS), resultSet.getInt(SQLQuery.ROLES_ID));
             }
         } catch (ConnectionPoolException e) {
             throw new DAOException("Incorrect login or email");

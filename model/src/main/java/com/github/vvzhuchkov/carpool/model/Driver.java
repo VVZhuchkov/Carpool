@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Driver extends Entity implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String license;
     private Date issueDate;
     private Date endDate;

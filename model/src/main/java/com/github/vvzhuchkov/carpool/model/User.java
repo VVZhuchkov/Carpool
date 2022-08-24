@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Objects;
 
 public class User extends Entity implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String name;
     private String middleName;
     private String surname;

@@ -3,6 +3,7 @@
 <div id="page">
 <nav>
   <ul class="menu">
+    <li><a href="#">Users</a></li>
     <li><a href="#">Employees</a></li>
     <li><a href="#">Park</a></li>
     <li><a href="#">Orders</a></li>

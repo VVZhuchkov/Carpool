@@ -4,19 +4,20 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Role extends Entity implements Serializable {
-    private RoleAuthUser roleAuthUser;
+    private static final long serialVersionUID = 1L;
+    private String roleAuthUser;
 
 
-    public Role(Integer id, RoleAuthUser roleAuthUser) {
+    public Role(Integer id, String roleAuthUser) {
         super(id);
         this.roleAuthUser = roleAuthUser;
     }
 
-    public RoleAuthUser getRoleAuthUser() {
+    public String getRoleAuthUser() {
         return roleAuthUser;
     }
 
-    public void setRoleAuthUser(RoleAuthUser roleAuthUser) {
+    public void setRoleAuthUser(String roleAuthUser) {
         this.roleAuthUser = roleAuthUser;
     }
 

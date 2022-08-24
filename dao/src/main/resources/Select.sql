@@ -1,3 +1,2 @@
 select * from auth_users;
-select * from auth_users_has_roles;
-select * from roles;
+select role from roles where id=1;

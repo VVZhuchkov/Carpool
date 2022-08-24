@@ -35,7 +35,7 @@ DEFAULT CHARACTER SET = utf8mb3;
 -- Table `carpool`.`auth_users`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `carpool`.`auth_users` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL,
   `email` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
   `status` VARCHAR(20) NOT NULL,

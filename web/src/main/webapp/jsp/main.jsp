@@ -8,5 +8,26 @@
 </head>
 <body>
 <jsp:include page="../form/main_menu.jsp"/>
+
+<h3 align="center">Watch our autopark:</h3>
+        <c:if test="${authUserList != null}">
+            <jsp:include page="../form/main_tabstl.jsp" />
+            <table align="center">
+                <tr>
+                    <th>Auth User ID</th>
+                    <th>Email</th>
+                    <th>Password</th>
+                    <th>Status</th>
+                </tr>
+                <c:forEach items="${authUserList}" var="authUser">
+                    <tr>
+                        <td>${authUser.id}</td>
+                        <td>${authUser.email}</td>
+                        <td>${authUser.password}</td>
+                        <td>${authUser.status}</td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </c:if>
 </body>
 </html>

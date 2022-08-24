@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Order extends Entity implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String from;
     private String to;
     private String cargo;
