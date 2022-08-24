@@ -19,7 +19,7 @@ public class DefaultAuthUserService implements AuthUserService {
         } catch (DAOException e) {
             throw new ServiceException("User with this email doesn't exist");
         }
-        if (authUser != null && authUser.getPassword().equals(password)) {
+        if (authUser != null && authUser.getPassword().equals(password) && authUser.getStatus().equals("active")) {
             return authUser;
         }
         return null;

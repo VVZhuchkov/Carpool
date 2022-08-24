@@ -7,9 +7,13 @@ import java.util.List;
 
 public interface AuthUserDao {
 
+    AuthUser readAuthUserById(Integer id);
+
     Integer authUserCreate(AuthUser authUser) throws DAOException;
 
     AuthUser readByEmail(String email) throws DAOException;
 
     List<AuthUser> getAllAuthUsers();
+
+    Integer updateAuthUser (AuthUser authUser);
 }
