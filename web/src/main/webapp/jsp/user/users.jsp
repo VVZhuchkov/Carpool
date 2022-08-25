@@ -3,13 +3,10 @@
 
 <html>
 <head>
-<link rel="stylesheet" href="css/main_menu.css">
- <script src="js/main_menu.js" type="text/javascript"></script>
+<jsp:include page="../form/main_menu_selector.jsp"/>
 </head>
 <body>
-<jsp:include page="../form/main_menu.jsp"/>
-
-<h3 align="center">Users:</h3>
+<h3 align="center">All users are here:</h3>
         <c:if test="${authUserList != null}">
             <jsp:include page="../form/main_tabstl.jsp" />
             <table align="center">

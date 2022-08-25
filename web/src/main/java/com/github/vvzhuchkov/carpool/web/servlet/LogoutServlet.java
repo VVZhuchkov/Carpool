@@ -22,7 +22,7 @@ public class LogoutServlet extends HttpServlet {
             request.getSession().removeAttribute("authUser");
         }
         request.getSession().invalidate();
-        WebUtil.forward("login", request, response);
+        WebUtil.forward("form/login", request, response);
     }
 
 }

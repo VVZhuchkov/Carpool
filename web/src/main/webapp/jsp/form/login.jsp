@@ -6,6 +6,6 @@
 <link rel="stylesheet" href="css/login_form.css">
 </head>
 <body>
-<jsp:include page="../form/login_form.jsp"/>
+<jsp:include page="login_form.jsp"/>
 </body>
 </html>

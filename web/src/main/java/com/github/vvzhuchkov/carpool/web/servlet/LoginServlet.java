@@ -26,7 +26,7 @@ public class LoginServlet extends HttpServlet {
         HttpSession session = request.getSession();
         AuthUser authUser = (AuthUser) session.getAttribute("authUser");
         if (authUser == null) {
-            WebUtil.forward("login", request, response);
+            WebUtil.forward("form/login", request, response);
             return;
         }
         WebUtil.redirect("/main", request, response);
@@ -44,7 +44,7 @@ public class LoginServlet extends HttpServlet {
         }
         if (authUser == null) {
             request.setAttribute("error", "Invalid email or password");
-            WebUtil.forward("login", request, response);
+            WebUtil.forward("form/login", request, response);
             return;
         }
         request.getSession().setAttribute("authUser", authUser);
