@@ -35,8 +35,9 @@ public class DefaultAuthUserDao implements AuthUserDao {
     @Override
     public AuthUser readAuthUserById(Integer id) {
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery.READ_AUTH_USER_BY_ID);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery.READ_AUTH_USER_BY_ID)) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 return new AuthUser(resultSet.getInt(SQLQuery.ID), resultSet.getString(SQLQuery.EMAIL),
                         resultSet.getString(SQLQuery.PASSWORD), resultSet.getString(SQLQuery.STATUS), resultSet.getInt(SQLQuery.ROLES_ID));
@@ -92,9 +93,9 @@ public class DefaultAuthUserDao implements AuthUserDao {
     }
 
     @Override
-    public Integer updateAuthUser (AuthUser authUser) {
+    public Integer updateAuthUser(AuthUser authUser) {
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery.UPDATE_AUTH_USER, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery.UPDATE_AUTH_USER, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, authUser.getPassword());
             preparedStatement.setString(2, authUser.getStatus());
             preparedStatement.setInt(3, authUser.getIdRoleAuthUser());
@@ -110,16 +111,20 @@ public class DefaultAuthUserDao implements AuthUserDao {
     }
 
     //Set status to "inactive"
-    public Integer deleteAuthUser(Integer id) {
+    public synchronized Integer deleteAuthUser(Integer id) {
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery.DELETE_AUTH_USER, Statement.RETURN_GENERATED_KEYS)) {
-             preparedStatement.setInt(1, id);
-             preparedStatement.setString(2, StatusAuthUser.getRoleAuthUser(id));
-             preparedStatement.executeUpdate();
+            preparedStatement.setString(1, StatusAuthUser.getRoleAuthUser(2));
+            preparedStatement.setInt(2, id);
+            preparedStatement.executeUpdate();
+            ResultSet generatedKey = preparedStatement.getGeneratedKeys();
+            generatedKey.next();
+            return generatedKey.getInt(1);
         } catch (ConnectionPoolException e) {
             e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return null;
     }
 }

@@ -18,7 +18,6 @@ nav a {
   color: #fff;
 }
 
-/* Important stuff */
 ul.menu {
   padding: 0;
   width: 100%;
@@ -35,10 +34,9 @@ ul.menu li {
   -moz-box-sizing: border-box;
   /* Fixes Firefox bug */
   box-sizing: border-box;
-  width: 20%;
+  width: 16.666%;
   text-align: center;
 }
-
 ul.menu li:hover {
   background: #787878
 }
@@ -46,4 +44,3 @@ ul.menu li:hover {
 ul.menu li a {
   display: block;
 }
-

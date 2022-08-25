@@ -6,7 +6,6 @@ import com.github.vvzhuchkov.carpool.dao.exception.DAOException;
 import com.github.vvzhuchkov.carpool.dao.interf.RoleDao;
 import com.github.vvzhuchkov.carpool.dao.query.SQLQuery;
 import com.github.vvzhuchkov.carpool.model.AuthUser;
-import com.github.vvzhuchkov.carpool.model.Role;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,12 +15,13 @@ import java.sql.SQLException;
 public class DefaultRoleDao implements RoleDao {
 
     @Override
-    public String getAuthUserRole(AuthUser authUser) throws DAOException {
+    public String getAuthUserRole(Integer idRoleAuthUser) throws DAOException {
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery.READ_AUTH_USER_ROLE_BY_ID);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery.READ_AUTH_USER_ROLE_BY_ID)) {
+             preparedStatement.setInt(1, idRoleAuthUser);
+             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                return resultSet.getString(SQLQuery.ROLES_ID);
+                return resultSet.getString(SQLQuery.ROLE);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();

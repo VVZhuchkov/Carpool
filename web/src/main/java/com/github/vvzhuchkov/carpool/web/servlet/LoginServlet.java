@@ -2,7 +2,6 @@ package com.github.vvzhuchkov.carpool.web.servlet;
 
 import com.github.vvzhuchkov.carpool.dao.exception.DAOException;
 import com.github.vvzhuchkov.carpool.model.AuthUser;
-import com.github.vvzhuchkov.carpool.model.RoleAuthUser;
 import com.github.vvzhuchkov.carpool.service.exception.ServiceException;
 import com.github.vvzhuchkov.carpool.service.factory.FactoryService;
 import com.github.vvzhuchkov.carpool.service.interf.AuthUserService;

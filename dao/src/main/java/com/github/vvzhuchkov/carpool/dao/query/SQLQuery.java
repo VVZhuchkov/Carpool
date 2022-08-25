@@ -8,12 +8,13 @@ public class SQLQuery {
     public static final String UPDATE_AUTH_USER = "UPDATE auth_users SET password = (?), status = (?), roles_id = (?)";
     public static final String DELETE_AUTH_USER = "UPDATE auth_users SET status = (?) WHERE id = (?)";
     public static final String CREATE_AUTH_USER_ROLE_LINK ="INSERT INTO auth_users_has_roles (auth_users_id, roles_id) VALUES (?,?)";
-    public static final String READ_AUTH_USER_ROLE_BY_ID = "SELECT * FROM roles WHERE id = (?)";
+    public static final String READ_AUTH_USER_ROLE_BY_ID = "SELECT role FROM roles WHERE id = (?)";
 
     public static final String ID = "id";
     public static final String EMAIL = "email";
     public static final String PASSWORD = "password";
     public static final String STATUS = "status";
     public static final String ROLES_ID = "roles_id";
+    public static final String ROLE = "role";
 
 }

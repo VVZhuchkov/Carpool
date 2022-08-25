@@ -8,7 +8,7 @@
     <li><a href="#">Park</a></li>
     <li><a href="#">Orders</a></li>
     <li><a href="#">Routes</a></li>
-    <li><a href="#">Logout</a></li>
+    <li><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
   </ul>
 </nav>
 
