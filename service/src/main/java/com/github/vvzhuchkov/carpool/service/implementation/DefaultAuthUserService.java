@@ -29,4 +29,8 @@ public class DefaultAuthUserService implements AuthUserService {
         List<AuthUser> authUserList = authUserDAO.getAllAuthUsers();
         return authUserList;
     }
+
+    public void createUser(){
+        //AuthUser authUser = authUserDAO.authUserCreate();
+    }
 }

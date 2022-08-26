@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class StatusAuthUser {
-    private static final String ACTIVE = "active";
-    private static final String INACTIVE = "inactive";
+    private static final String ACTIVE = "Active";
+    private static final String INACTIVE = "Inactive";
 
     private static Map<Integer, String> statusAuthUserMap = new HashMap();
 

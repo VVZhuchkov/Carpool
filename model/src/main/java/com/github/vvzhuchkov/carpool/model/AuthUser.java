@@ -10,6 +10,13 @@ public class AuthUser extends Entity implements Serializable {
     private String status;
     private Integer idRoleAuthUser;
 
+    public AuthUser(String email, String password, String status, Integer idRoleAuthUser) {
+        this.email = email;
+        this.password = password;
+        this.status = status;
+        this.idRoleAuthUser = idRoleAuthUser;
+    }
+
     public AuthUser(Integer id, String email, String password, String status, Integer idRoleAuthUser) {
         super(id);
         this.email = email;

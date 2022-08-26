@@ -2,7 +2,7 @@
 <form action="${pageContext.request.contextPath}/login" method="post">
   <div class="row">
     <label for="email">Email</label>
-    <input type="email" name="email" autocomplete="off" placeholder="email@example.com">
+    <input type="email" name="email" autocomplete="off">
   </div>
   <div class="row">
     <label for="password">Password</label>

@@ -4,19 +4,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RoleAuthUser {
-    private static final String ADMINISTRATOR = "administrator";
-    private static final String DISPATCHER = "dispatcher";
-    private static final String DRIVER = "driver";
+    private static final String ADMINISTRATOR = "Administrator";
+    private static final String DISPATCHER = "Dispatcher";
+    private static final String DRIVER = "Driver";
 
-    private static Map<Integer, String> roleAuthUserMap = new HashMap();
+    private static Map<String, Integer> roleAuthUserMap = new HashMap();
 
     static {
-        roleAuthUserMap.put(1, ADMINISTRATOR);
-        roleAuthUserMap.put(2, DISPATCHER);
-        roleAuthUserMap.put(3, DRIVER);
+        roleAuthUserMap.put(ADMINISTRATOR, 1);
+        roleAuthUserMap.put(DISPATCHER, 2);
+        roleAuthUserMap.put(DRIVER, 3);
     }
 
-    public String getRoleAuthUser (Integer idRoleAuthUser){
-        return roleAuthUserMap.get(idRoleAuthUser);
+    public Integer getRoleAuthUser (String role){
+        return roleAuthUserMap.get(role);
     }
 }

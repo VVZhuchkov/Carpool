@@ -5,7 +5,7 @@
   <ul class="menu">
     <li class="dropdown"><a href="${pageContext.request.contextPath}/users" class="dropbtn">Users</a>
                 <div class="dropdown-content">
-                  <a href="#">Create</a>
+                  <a href="${pageContext.request.contextPath}/create_user">Create</a>
                   <a href="#">Update</a>
                   <a href="#">Delete</a>
                 </div>
