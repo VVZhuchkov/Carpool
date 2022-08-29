@@ -2,6 +2,7 @@ package com.github.vvzhuchkov.carpool.web.servlet;
 
 import com.github.vvzhuchkov.carpool.dao.exception.DAOException;
 import com.github.vvzhuchkov.carpool.model.AuthUser;
+import com.github.vvzhuchkov.carpool.model.RoleAuthUser;
 import com.github.vvzhuchkov.carpool.service.exception.ServiceException;
 import com.github.vvzhuchkov.carpool.service.factory.FactoryService;
 import com.github.vvzhuchkov.carpool.service.interf.AuthUserService;
@@ -21,7 +22,6 @@ import java.util.List;
 public class CreateUserServlet extends HttpServlet {
     private static final Logger logger = Logger.getLogger(CreateUserServlet.class);
     private static final AuthUserService authUserService = FactoryService.getInstance().getAuthUserService();
-    private static final RoleService roleService = FactoryService.getInstance().getRoleService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
@@ -29,12 +29,19 @@ public class CreateUserServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response){
-                String email = request.getParameter("email");
-                String password = request.getParameter("password");
-                String status = request.getParameter("status");
-                String role = request.getParameter("role");
-
-        WebUtil.forward("user/users", request, response);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        String status = request.getParameter("status");
+        Integer idRoleAuthUser = RoleAuthUser.getRoleAuthUser(request.getParameter("role"));
+        AuthUser authUser = new AuthUser(email, password, status, idRoleAuthUser);
+        Integer idCreatedUser = null;
+        try {
+            idCreatedUser = authUserService.createUser(authUser);
+        } catch (ServiceException e) {
+            logger.error(Level.ERROR, e);
+        }
+        request.setAttribute("info", "User id = " + idCreatedUser + " has been created");
+        WebUtil.forward("user/create_user", request, response);
     }
 }

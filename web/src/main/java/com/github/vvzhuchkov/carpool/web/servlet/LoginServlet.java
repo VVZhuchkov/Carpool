@@ -54,7 +54,6 @@ public class LoginServlet extends HttpServlet {
         } catch (DAOException e) {
             e.printStackTrace();
         }
-
         WebUtil.redirect("/main", request, response);
     }
 }

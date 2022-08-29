@@ -1,5 +1,6 @@
 package com.github.vvzhuchkov.carpool.service.interf;
 
+import com.github.vvzhuchkov.carpool.dao.exception.DAOException;
 import com.github.vvzhuchkov.carpool.model.AuthUser;
 import com.github.vvzhuchkov.carpool.service.exception.ServiceException;
 
@@ -11,4 +12,5 @@ public interface AuthUserService {
 
     List<AuthUser> getAllAuthUsers();
 
+    Integer createUser(AuthUser authUser) throws ServiceException;
 }

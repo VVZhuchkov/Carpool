@@ -17,10 +17,11 @@ public class DefaultAuthUserDao implements AuthUserDao {
     @Override
     public synchronized Integer authUserCreate(AuthUser authUser) throws DAOException {
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery.CREATE_AUTH_USER, Statement.RETURN_GENERATED_KEYS)) {
+            PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery.CREATE_AUTH_USER, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, authUser.getEmail());
             preparedStatement.setString(2, authUser.getPassword());
             preparedStatement.setString(3, authUser.getStatus());
+            preparedStatement.setInt(4, authUser.getIdRoleAuthUser());
             preparedStatement.executeUpdate();
             ResultSet generatedKey = preparedStatement.getGeneratedKeys();
             generatedKey.next();
@@ -85,9 +86,9 @@ public class DefaultAuthUserDao implements AuthUserDao {
                         resultSet.getString(SQLQuery.PASSWORD), resultSet.getString(SQLQuery.STATUS), resultSet.getInt(SQLQuery.ROLES_ID));
             }
         } catch (ConnectionPoolException e) {
-            throw new DAOException("Incorrect login or email");
+            throw new DAOException("Connection hasn't been taken", e);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DAOException("Check SQL query", e);
         }
         return null;
     }

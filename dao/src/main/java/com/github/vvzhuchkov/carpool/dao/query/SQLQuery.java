@@ -1,7 +1,7 @@
 package com.github.vvzhuchkov.carpool.dao.query;
 
 public class SQLQuery {
-    public static final String CREATE_AUTH_USER = "INSERT INTO auth_users (email, password, status) VALUES (?, ?, ?);";
+    public static final String CREATE_AUTH_USER = "INSERT INTO auth_users (email, password, status, roles_id) VALUES (?, ?, ?, ?);";
     public static final String READ_AUTH_USER_BY_EMAIL = "SELECT * FROM auth_users WHERE email = (?)";
     public static final String READ_AUTH_USER_BY_ID = "SELECT * FROM auth_users WHERE id = (?)";
     public static final String READ_ALL_AUTH_USERS = "SELECT * FROM auth_users";

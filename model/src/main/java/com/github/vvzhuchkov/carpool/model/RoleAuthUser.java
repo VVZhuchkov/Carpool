@@ -16,7 +16,7 @@ public class RoleAuthUser {
         roleAuthUserMap.put(DRIVER, 3);
     }
 
-    public Integer getRoleAuthUser (String role){
+    public static Integer getRoleAuthUser (String role){
         return roleAuthUserMap.get(role);
     }
 }
